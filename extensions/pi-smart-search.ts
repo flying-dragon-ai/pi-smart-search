@@ -9,6 +9,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -24,7 +25,10 @@ const ACTIONS = [
 	"context7-docs",
 	"map",
 	"doctor",
+	"doctor",
 	"providers",
+	"xhs",
+	"wechat",
 ] as const;
 
 type Action = (typeof ACTIONS)[number];
@@ -54,6 +58,8 @@ interface RunResult {
 
 function cliScript(): string {
 	if (process.env.PI_SMART_SEARCH_BIN) return process.env.PI_SMART_SEARCH_BIN;
+	const fork = "D:/codingProjects/GITHUB/smartsearch/bin/smart-search.js";
+	if (existsSync(fork)) return fork;
 	return join(
 		homedir(),
 		"AppData",
@@ -106,6 +112,10 @@ function buildArgv(args: RunArgs): string[] {
 			return ["doctor", "--format", "json"];
 		case "providers":
 			return ["providers", "status", "--format", "json"];
+		case "xhs":
+			return ["xhs-search", requireText(args.query, "query"), "--format", "json"];
+		case "wechat":
+			return ["wechat-search", requireText(args.query, "query"), "--format", "json"];
 	}
 }
 
@@ -140,7 +150,7 @@ function compact(raw: string): string {
 			if (url || title) lines.push(`- ${url} ${title}`.trim());
 		}
 	}
-	if (doc.error) lines.push(`error: ${String(doc.error).slice(0, 500)}`);
+	if (doc.error) lines.push(`error: ${typeof doc.error === "string" ? doc.error : JSON.stringify(doc.error)}`);
 	return lines.join("\n").slice(0, MAX_MODEL_CHARS);
 }
 

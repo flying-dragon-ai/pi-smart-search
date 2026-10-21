@@ -34,6 +34,12 @@ const ctx = {
 	cwd: "C:/Users/Administrator/AppData/Local/Temp",
 	ui: { notify: (m) => console.log("[notify]", String(m).slice(0, 200)) },
 };
-const result = await tools[0].execute("t", { action: "doctor", timeoutSeconds: 40 }, undefined, undefined, ctx);
-console.log(result.content[0].text.slice(0, 800));
-console.log(result.isError ? "SMOKE FAIL" : "SMOKE PASS");
+for (const action of ["xhs", "wechat"]) {
+	const result = await tools[0].execute("t", { action, query: "露营装备", timeoutSeconds: 30 }, undefined, undefined, ctx);
+	console.log(action, result.content[0].text.split("\n")[0]);
+	if (result.isError && !result.content[0].text.includes("auth_required") && !result.content[0].text.includes("exit=0")) {
+		console.log("SMOKE FAIL", action);
+		process.exit(1);
+	}
+}
+console.log("SMOKE PASS");
