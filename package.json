@@ -1,0 +1,24 @@
+{
+	"name": "pi-smart-search",
+	"version": "0.1.0",
+	"description": "Pi extension that wraps the local smart-search CLI: sourced web search, fetch, Chinese search, and library docs. 把本机 smart-search 包成 pi 工具，检索带出处，密钥不进参数。",
+	"type": "module",
+	"license": "MIT",
+	"keywords": ["pi-package", "pi", "pi-extension", "smart-search", "web-search", "research"],
+	"files": ["extensions", "skills", "README.md", "LICENSE"],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/flying-dragon-ai/pi-smart-search.git"
+	},
+	"homepage": "https://github.com/flying-dragon-ai/pi-smart-search",
+	"pi": {
+		"extensions": ["./extensions/pi-smart-search.ts"],
+		"skills": ["./skills"]
+	},
+	"peerDependencies": {
+		"@earendil-works/pi-coding-agent": "*",
+		"@earendil-works/pi-ai": "*",
+		"@earendil-works/pi-tui": "*",
+		"typebox": "*"
+	}
+}
