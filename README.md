@@ -44,6 +44,28 @@ pi install npm:pi-smart-search
 
 `xhs` 只检索小红书笔记，`wechat` 只检索公众号文章。不发帖、不点赞、不关注。
 
-密钥放 `~/.config/smart-search`，键名 `XHS_API_URL` / `XHS_API_KEY` / `WECHAT_API_URL` / `WECHAT_API_KEY`。不要写进工具参数。
+### 小红书（已打通，基于本地 xiaohongshu-mcp）
 
+登录与数据源都是本地服务，不需要任何平台 API key：
+
+```bash
+# 1. 起服务（幂等）：xiaohongshu-mcp(:18060) + xhs-adapter(:18061)
+D:\codingProjects\GITHUB\smartsearch\start_xhs_adapter.cmd
+
+# 2. 登录/重登：浏览器打开二维码页，用小红书 App 扫码
+start http://127.0.0.1:18061/login
+
+# 3. 配置（只写配置文件，密钥不进命令行）
+smart-search config set XHS_API_URL http://127.0.0.1:18061
+smart-search config set XHS_API_KEY local-xhs
+smart-search config set XHS_MODE live
+
+# 4. 搜索（真实结果）
+smart-search xhs-search "露营装备" --format json
+```
+
+
+### 微信公众号
+
+数据源未定。`WECHAT_API_URL` / `WECHAT_API_KEY` 配好后走同一个 `POST {baseUrl}/search` 适配器契约；未配置时返回 `error.code=auth_required`。`--fixture` 返回本地样例。`MODE=browser` 是实验项，当前返回 `upstream`。
 未配置时返回 `error.code=auth_required`。本地验收用 CLI 的 `--fixture`。真源是 `POST {baseUrl}/search`，body 为 `{"query","count","platform"}`。`MODE=browser` 是实验项，当前返回 `upstream`。
