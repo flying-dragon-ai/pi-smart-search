@@ -20,8 +20,15 @@ description: 用本机 smart-search CLI 做带出处的网页检索。当需要�
 | 只看会走哪条通道 | `route` | query |
 | 通道挂了 | `doctor` 或 `providers` | 无 |
 | 小红书笔记 | `xhs` | query |
+| 小红书笔记 | `xhs` | query |
 | 微信公众号文章 | `wechat` | query |
-
+| 知乎问答 | `zhihu` | query |
+| 微博 | `weibo` | query |
+| 网盘分享链接 | `pan` | query |
+| 磁力/电驴链接 | `magnet` | query |
+| 电子书镜像目录 | `ebook` | query |
+| 学术论文（OpenAlex+Semantic Scholar） | `academic` | query |
+| B站视频 | `bilibili` | query |
 高风险事实（新闻、政策、价格、健康）不要只信 search 的 content，对关键 URL 再 `fetch` 一次，只转述抓到的正文。
 
 完整输出若被截断，按工具返回的 `full text` 路径用 read 读。

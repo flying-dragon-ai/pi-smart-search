@@ -6,13 +6,16 @@
 	"license": "MIT",
 	"keywords": ["pi-package", "pi", "pi-extension", "smart-search", "web-search", "research"],
 	"files": ["extensions", "skills", "README.md", "LICENSE"],
+	"scripts": {
+		"test": "node --test extensions/smart-search/*.test.ts"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/flying-dragon-ai/pi-smart-search.git"
 	},
 	"homepage": "https://github.com/flying-dragon-ai/pi-smart-search",
 	"pi": {
-		"extensions": ["./extensions/pi-smart-search.ts"],
+		"extensions": ["./extensions/smart-search/index.ts"],
 		"skills": ["./skills"]
 	},
 	"peerDependencies": {
